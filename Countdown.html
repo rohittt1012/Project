@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CountDown Timer</title>
+    <style>
+        body {
+            background-color: aqua;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .countdown-display {
+            display: flex;
+            margin-left: 32%;
+            margin-top: 100px;
+        }
+        .countdown-item {
+            margin-right: 100px;
+            font-size: 24px;
+        }
+        .name {
+            display: flex;
+            margin-top: 10px;
+            margin-left: 32%;
+        } 
+        .a {
+            margin-right: 50px;
+            font-size: 24px;
+        }
+        #event {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CountDown Timer</h1>
+    <div id="event">
+        <label for="event-date">Event Date : </label>
+        <input type="datetime-local" id="event-date-time" required>
+        <button onclick="startCountdown()">Start CountDown</button>
+        
+        <div class="countdown-display">
+            <div id="days" class="countdown-item">00</div>
+            <div id="hours" class="countdown-item">00</div>
+            <div id="minutes" class="countdown-item">00</div>
+            <div id="seconds" class="countdown-item">00</div>
+        </div>
+        <div class="name">
+            <div class="a">Day</div>
+            <div class="a">Hour</div>
+            <div class="a">Minute</div>
+            <div class="a">Second</div>
+        </div>
+    </div>
+    <script>
+        function startCountdown() {
+            // Set the event date and time
+            var countDownDate = new Date(document.getElementById("event-date-time").value).getTime();
+
+            // Update the countdown every 1 second
+            var x = setInterval(function() {
+                // Get the current date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the event date
+                var distance = countDownDate - now;
+
+                // Calculate the days, hours, minutes, and seconds remaining
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the countdown in the HTML elements
+                document.getElementById("days").innerHTML = days;
+                document.getElementById("hours").innerHTML = hours;
+                document.getElementById("minutes").innerHTML = minutes;
+                document.getElementById("seconds").innerHTML = seconds;
+
+                // If the countdown is finished, display a message
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("event").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
